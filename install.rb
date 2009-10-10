@@ -14,7 +14,7 @@ puts "Adding pre-commit hooks"
 # Add to existing.
 File.open(git_hook, "a") do |file|
   file.write "#!/bin/sh\n" if new_file
-  file.write "../../script/runner vendor/plugins/version_system/lib/increment_version.rb"
+  file.write "script/runner vendor/plugins/version_system/lib/increment_version.rb"
 end
 
 system("chmod +x #{git_hook}")

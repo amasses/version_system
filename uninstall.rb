@@ -15,7 +15,7 @@ if File.exists?(hook_file)
   File.open(hook_fiile, "a") do |file|
     f_lines.each do |fl|
       puts "Current line: #{fl}"
-      unless fl == "../../script/runner vendor/plugins/version_system/lib/increment_version.rb"
+      unless fl == "script/runner vendor/plugins/version_system/lib/increment_version.rb"
         file.write(fl)
       end
     end
