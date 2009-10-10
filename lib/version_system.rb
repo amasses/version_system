@@ -1,5 +1,5 @@
 require 'ostruct'
-ver_path = "#{File.dirname(__FILE__)}/../version.yml"
+ver_path = "#{RAILS_ROOT}/config/version.yml"
 
 #loads the version YAML file and creates an APP_VERSION struct from that hash for access
 if File.exists?(ver_path)
