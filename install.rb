@@ -1,29 +1,20 @@
 require 'ftools'
 
-@rails_root = "../../../"
-
 # Install hook code here
+git_hook = "#{RAILS_ROOT}/.git/hooks/pre-commit"
 
-
-git_hook = "#{@rails_root}/.git/hooks/pre-commit"
-lines = [
-    %{ruby -e 'require "yaml"; vars = YAML::load_file("config/version.yml"); vars[:rel_date] = DateTime.now; vars[:year] = vars[:rel_date].year; vars[:revision] = vars[:revision] + 1; File.open("config/version.yml", "w") { |fo| YAML::dump(vars, fo)}'},
-    %{echo "Updated version information"},
-    %{git add config/version.yml}
-  ]
-
-File.copy("config/version.yml", "#{@rails_root}/config/version.yml")
+File.copy("config/version.yml", "#{RAILS_ROOT}/config/version.yml")
 
 if !File.exists?(git_hook)
-  lines.insert(0, "#!/bin/sh")
+ new_file = true
+
 end
 
 puts "Adding pre-commit hooks"
 # Add to existing.
 File.open(git_hook, "a") do |file|
-  lines.each do |line|
-    file.write(line + "\n")
-  end
+  file.write "#!/bin/sh" if new_file
+  file.write "../../script/runner vendor/plugins/version_system/lib/increment_version.rb"
 end
 
 system("chmod +x #{git_hook}")
