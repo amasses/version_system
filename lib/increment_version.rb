@@ -9,3 +9,5 @@ vars[:revision] = vars[:revision] + 1
 File.open(ver_path, "w") do |fo|
   YAML::dump(vars, fo)
 end
+
+exec "git add #{ver_path}"
